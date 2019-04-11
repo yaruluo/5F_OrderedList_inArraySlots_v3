@@ -18,7 +18,45 @@ public class OrderedList_inArraySlots
               \findMe is absent from this list.
      */
     public int indexOf( Integer findMe) {
-        return -1;
+        //return bSearch_whileStyle( findMe);
+	return bSearch_recursive( findMe, 0, size()-1);
+    }
+
+    public int bSearch_whileStyle( Integer findMe){
+	int lowLim = 0;
+	int highLim = size() - 1;
+	
+	while( highLim >= lowLim){
+	    
+	    int pageToCheck = ( highLim + lowLim) / 2;
+	    Integer nameOnPage = list_iAS.get( pageToCheck);
+	    int comparison = nameOnPage.compareTo( findMe);
+	    
+	    if( comparison == 0)
+		return pageToCheck;
+	    else if( comparison > 0)
+		       highLim = pageToCheck - 1;
+	    else
+		lowLim = pageToCheck + 1;
+	    
+	}
+	return -1;
+    }
+
+    public int bSearch_recursive( Integer findMe, int lowLim, int highLim){
+	if( lowLim > highLim)
+	    return -1;
+	int pageToCheck = ( highLim + lowLim) / 2;
+	Integer nameOnPage = list_iAS.get( pageToCheck);
+	int comparison = nameOnPage.compareTo( findMe);
+
+	if( comparison == 0)
+		return pageToCheck;
+	    else if( comparison > 0)
+		return bSearch_recursive( findMe, lowLim, pageToCheck-1);
+	    else
+	        return bSearch_recursive( findMe, pageToCheck+1, highLim);
+	
     }
     
 
